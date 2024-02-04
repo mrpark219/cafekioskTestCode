@@ -1,8 +1,6 @@
 package sample.cafekiosktestcode.spring.domain.order;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import sample.cafekiosktestcode.spring.domain.BaseEntity;
 import sample.cafekiosktestcode.spring.domain.orderProduct.OrderProduct;
 import sample.cafekiosktestcode.spring.domain.product.Product;
@@ -28,22 +26,27 @@ public class Order extends BaseEntity {
 
 	private int totalPrice;
 
-	private LocalDateTime registeredDateTIme;
+	private LocalDateTime registeredDateTime;
 
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	private List<OrderProduct> orderProducts = new ArrayList<>();
 
-	public Order(List<Product> products, LocalDateTime registeredDateTime) {
-		this.orderStatus = OrderStatus.INIT;
+	@Builder
+	public Order(List<Product> products, OrderStatus orderStatus, LocalDateTime registeredDateTime) {
+		this.orderStatus = orderStatus;
 		this.totalPrice = calculateTotalPrice(products);
-		this.registeredDateTIme = registeredDateTime;
+		this.registeredDateTime = registeredDateTime;
 		this.orderProducts = products.stream()
-				.map(product -> new OrderProduct(this, product))
-				.collect(Collectors.toList());
+			.map(product -> new OrderProduct(this, product))
+			.collect(Collectors.toList());
 	}
 
 	public static Order create(List<Product> products, LocalDateTime registeredDateTime) {
-		return new Order(products, registeredDateTime);
+		return Order.builder()
+			.orderStatus(OrderStatus.INIT)
+			.products(products)
+			.registeredDateTime(registeredDateTime)
+			.build();
 	}
 
 	private int calculateTotalPrice(List<Product> products) {
