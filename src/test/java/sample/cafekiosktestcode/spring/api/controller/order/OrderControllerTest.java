@@ -1,15 +1,10 @@
 package sample.cafekiosktestcode.spring.api.controller.order;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
 import sample.cafekiosktestcode.spring.ControllerTestSupport;
 import sample.cafekiosktestcode.spring.api.controller.order.request.OrderCreateRequest;
-import sample.cafekiosktestcode.spring.api.service.order.OrderService;
 
 import java.util.List;
 
