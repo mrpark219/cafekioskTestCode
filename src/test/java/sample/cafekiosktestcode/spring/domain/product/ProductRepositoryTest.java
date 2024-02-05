@@ -3,8 +3,8 @@ package sample.cafekiosktestcode.spring.domain.product;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
+import sample.cafekiosktestcode.spring.IntegrationTestSupport;
 
 import java.util.List;
 
@@ -13,9 +13,10 @@ import static org.assertj.core.api.Assertions.tuple;
 import static sample.cafekiosktestcode.spring.domain.product.ProductSellingStatus.*;
 import static sample.cafekiosktestcode.spring.domain.product.ProductType.HANDMADE;
 
-@ActiveProfiles("test")
-@DataJpaTest // JPA 관련 빈들만 로딩하기 때문에 속도가 @SpringBootTest에 비해 빠르다.
-class ProductRepositoryTest {
+//@DataJpaTest // JPA 관련 빈들만 로딩하기 때문에 속도가 @SpringBootTest에 비해 빠르다.
+
+@Transactional
+class ProductRepositoryTest extends IntegrationTestSupport {
 
 	@Autowired
 	private ProductRepository productRepository;
@@ -36,11 +37,11 @@ class ProductRepositoryTest {
 
 		//then
 		assertThat(products).hasSize(2)
-				.extracting("productNumber", "name", "sellingStatus")
-				.containsExactlyInAnyOrder(
-						tuple("001", "아메리카노", SELLING),
-						tuple("002", "카페라떼", HOLD)
-				);
+			.extracting("productNumber", "name", "sellingStatus")
+			.containsExactlyInAnyOrder(
+				tuple("001", "아메리카노", SELLING),
+				tuple("002", "카페라떼", HOLD)
+			);
 	}
 
 	@DisplayName("상품번호 리스트로 상품들을 조회한다.")
@@ -59,11 +60,11 @@ class ProductRepositoryTest {
 
 		//then
 		assertThat(products).hasSize(2)
-				.extracting("productNumber", "name", "sellingStatus")
-				.containsExactlyInAnyOrder(
-						tuple("001", "아메리카노", SELLING),
-						tuple("002", "카페라떼", HOLD)
-				);
+			.extracting("productNumber", "name", "sellingStatus")
+			.containsExactlyInAnyOrder(
+				tuple("001", "아메리카노", SELLING),
+				tuple("002", "카페라떼", HOLD)
+			);
 	}
 
 	@DisplayName("가장 마지막으로 저장한 상품의 상품번호를 읽어온다.")
@@ -99,11 +100,11 @@ class ProductRepositoryTest {
 
 	private Product createProduct(String productNumber, ProductType type, ProductSellingStatus sellingStatus, String name, int price) {
 		return Product.builder()
-				.productNumber(productNumber)
-				.type(type)
-				.sellingStatus(sellingStatus)
-				.name(name)
-				.price(price)
-				.build();
+			.productNumber(productNumber)
+			.type(type)
+			.sellingStatus(sellingStatus)
+			.name(name)
+			.price(price)
+			.build();
 	}
 }

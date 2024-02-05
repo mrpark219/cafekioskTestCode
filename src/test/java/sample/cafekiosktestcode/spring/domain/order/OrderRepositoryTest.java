@@ -3,8 +3,8 @@ package sample.cafekiosktestcode.spring.domain.order;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
+import sample.cafekiosktestcode.spring.IntegrationTestSupport;
 import sample.cafekiosktestcode.spring.domain.product.Product;
 import sample.cafekiosktestcode.spring.domain.product.ProductRepository;
 import sample.cafekiosktestcode.spring.domain.product.ProductSellingStatus;
@@ -19,9 +19,8 @@ import static sample.cafekiosktestcode.spring.domain.product.ProductSellingStatu
 import static sample.cafekiosktestcode.spring.domain.product.ProductType.HANDMADE;
 
 
-@ActiveProfiles("test")
-@SpringBootTest
-class OrderRepositoryTest {
+@Transactional
+class OrderRepositoryTest extends IntegrationTestSupport {
 
 	@Autowired
 	private OrderRepository orderRepository;
