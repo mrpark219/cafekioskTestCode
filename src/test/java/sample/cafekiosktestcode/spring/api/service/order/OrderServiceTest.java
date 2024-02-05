@@ -180,9 +180,9 @@ class OrderServiceTest {
 
 		productRepository.saveAll(List.of(product1, product2, product3));
 
-		Stock stock1 = Stock.create("001", 2);
+		Stock stock1 = Stock.create("001", 1);
 		Stock stock2 = Stock.create("002", 2);
-		stock1.deductQuantity(1); // todo
+
 		stockRepository.saveAll(List.of(stock1, stock2));
 
 		OrderCreateServiceRequest request = OrderCreateServiceRequest.builder()
